@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Web Components</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="import" href="components/x-component.html">
+    <style>
+    div {
+      font-size: 10px;
+    }
+    </style>
+  </head>
+  <body>
+    <div>ここはtemplateの外</div>
+    <x-component></x-component>
+    <x-component></x-component>
+    <x-component></x-component>
+    <div>ここはtemplateの外</div>
+
+    <!-- アクティベート -->
+    <script>
+    <!-- http://www.html5rocks.com/ja/tutorials/webcomponents/template/ -->
+    var imports = document.querySelector('link[rel="import"]').import;
+    // templateタグの取得
+    var templates = imports.querySelector('template');
+    if(templates) {
+      var contents = templates.content;
+      // x-component
+      var xcomponents = document.querySelectorAll('x-component');
+      for (i = 0; i < xcomponents.length; i++) {
+      // ShadowDomを作成し注入
+        xcomponents[i].createShadowRoot().appendChild(contents.cloneNode(true));
+      }
+    } else {
+      console.log("templateタグが未定義かもね");
+    }
+    </script>
+  </body>
+</html>

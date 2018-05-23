@@ -1,0 +1,50 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Web Components</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <style>
+    div {
+      font-size: 10px;
+    }
+    </style>
+  </head>
+  <body>
+    <div>ここはtemplateの外</div>
+    <x-component></x-component>
+    <x-component></x-component>
+    <x-component></x-component>
+    <div>ここはtemplateの外</div>
+
+    <!-- テンプレート -->
+    <template>
+      <div>Template used</div>
+      <div>hoge</div>
+      <style>
+      div {
+        font-size: 20px;
+      }
+      </style>
+      <script>
+      console.log('テンプレート'); // アクティベートすると実行される
+      </script>
+    </template>
+
+    <!-- アクティベート -->
+    <script>
+    // templateタグの取得
+    var templates = document.querySelector('template');
+    if(templates) {
+      var contents = templates.content;
+      // x-component
+      var xcomponents = document.querySelectorAll('x-component');
+      for (i = 0; i < xcomponents.length; i++) {
+        xcomponents[i].appendChild(contents.cloneNode(true));
+      }
+    } else {
+      console.log("templateタグが未定義かもね");
+    }
+    </script>
+  </body>
+</html>
